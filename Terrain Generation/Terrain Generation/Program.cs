@@ -27,11 +27,11 @@ namespace HelloWorld
             if (CompareColors(col, Color.GRAY))          //Stone
             posRadius.Y = Raylib.GetRandomValue(50, 200);
             else posRadius.Y = Raylib.GetRandomValue(200, 900); //Dirt
-
+            //Add on what level can a vain of blocks spawn here
+            
+            //All vains can generate on x level between 0 and 900
             posRadius.X = Raylib.GetRandomValue(0, 900);
             
-            
-
             unsafe
             {
                 fixed (Image* img = &world)
@@ -90,6 +90,7 @@ namespace HelloWorld
             GenerateVain(Color.GRAY);
             for (int i = 0; i < dirtVains; i++) //Generates all dirtVains
             GenerateVain(Color.BROWN);
+            //Add new block vains here
 
             Raylib.ExportImage(world, "world.png");
             
