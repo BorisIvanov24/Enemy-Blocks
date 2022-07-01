@@ -17,10 +17,10 @@ namespace HelloWorld
         }
 
         //Generates one vain (dirt,stone)
-        static void GenerateVain(Color col)
+        static void GenerateVain(Color col, int radiusLen)
         {
             Vector2 posRadius;
-            int radiusLen = 5;
+            
             List<Vector2> points = new List<Vector2>(); //list that consists all points that collide with the las circle
             int circlesInVain = 15;  //how many circles are in a vain
 
@@ -85,7 +85,7 @@ namespace HelloWorld
                 return true;
             }
 
-            int numberOfCaves = 60, i, j, circleRad = 5, p;
+            int numberOfCaves = 50, i, j, circleRad = 5, p;
             string side;
 
             unsafe
@@ -192,12 +192,16 @@ namespace HelloWorld
                             else if (rand == 3) position.Y += 2; //downwards
                             else i++;                        //same level
                             Raylib.ImageDrawRectangle(img, (int)position.X, 0, 2, (int)position.Y, Color.SKYBLUE);
+                            if(CompareColors(Raylib.GetImageColor(world, (int)position.X, (int)position.Y), Color.BROWN))
+                            { Raylib.ImageDrawRectangle(img, (int)position.X, (int)position.Y, 2, 1, Color.GREEN); }
                             continue;
                         }
                         
                         //Draw flat ground
                         Raylib.ImageDrawRectangle(img, (int)position.X, 0, 1, (int)position.Y, Color.SKYBLUE);
-                        
+                        if (CompareColors(Raylib.GetImageColor(world, (int)position.X, (int)position.Y), Color.BROWN))
+                            Raylib.ImageDrawRectangle(img, (int)position.X, (int)position.Y, 1, 1, Color.GREEN);
+
                         //if current position is in the limits of Y
                         if (position.Y == minY)
                         {
@@ -247,11 +251,14 @@ namespace HelloWorld
                 }
              }
 
-            int dirtVains = 200, stoneVains = 30;
+            int dirtVains = 200, stoneVains = 30, caveVains = 4;
             for(int i=0;i<stoneVains;i++) //Generates all stoneVains
-            GenerateVain(Color.GRAY);
+            GenerateVain(Color.GRAY, 5);
             for (int i = 0; i < dirtVains; i++) //Generates all dirtVains
-            GenerateVain(Color.BROWN);
+            GenerateVain(Color.BROWN, 5);
+            //for (int i = 0; i < caveVains; i++) //Generates all dirtVains
+            //GenerateVain(Color.LIGHTGRAY, 20);
+            
             //Add new block vains here
             GenerateCaves();
             GenerateGround();
